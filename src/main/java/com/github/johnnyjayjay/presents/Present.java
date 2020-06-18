@@ -53,7 +53,7 @@ public final class Present implements ConfigurationSerializable {
     ItemStack item = new ItemStack(Material.PLAYER_HEAD);
     net.minecraft.server.v1_15_R1.ItemStack nmsItem = org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack.asNMSCopy(item);
     try {
-      nmsItem.setTag(net.minecraft.server.v1_15_R1.MojangsonParser.parse("{SkullOwner:{Id:\"" + "" + "\",Properties:{textures:[{Value:\"" + texture + "\"}]}}}"));
+      nmsItem.setTag(net.minecraft.server.v1_15_R1.MojangsonParser.parse("{SkullOwner:{Id:\"c8b28030-905d-4d85-a881-372849a8adc8\",Properties:{textures:[{Value:\"" + texture + "\"}]}}}"));
     } catch (CommandSyntaxException e) {
       e.printStackTrace();
     }
