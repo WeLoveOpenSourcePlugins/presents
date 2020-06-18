@@ -6,3 +6,4 @@ api-version: '1.15'
 commands:
   present:
     description: "Get presents"
+    usage: "/present [get|delete|configure] <name>"

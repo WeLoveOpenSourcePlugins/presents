@@ -1,5 +1,6 @@
 package com.github.johnnyjayjay.presents.conversation;
 
+import com.github.johnnyjayjay.presents.Present;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;
@@ -21,7 +22,8 @@ public class StartPrompt extends MessagePrompt {
   }
 
   @Override
-  public String getPromptText(ConversationContext conversationContext) {
-    return "Welcome to the present configuration";
+  public String getPromptText(ConversationContext context) {
+    return "§aWelcome to the configuration of present §6"
+        + ((Present) context.getSessionData(Present.class)).getName() + "§a.";
   }
 }

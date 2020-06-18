@@ -2,6 +2,7 @@ package com.github.johnnyjayjay.presents;
 
 import java.util.*;
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 
 public final class DelegatingCommand implements CommandExecutor {
 

@@ -1,0 +1,5 @@
+presents: {}
+
+locations:
+  ==: com.github.johnnyjayjay.presents.PresentLocations
+  locations: []

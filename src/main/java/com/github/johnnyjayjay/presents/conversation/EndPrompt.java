@@ -1,5 +1,6 @@
 package com.github.johnnyjayjay.presents.conversation;
 
+import com.github.johnnyjayjay.presents.Present;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;
@@ -19,7 +20,8 @@ public class EndPrompt extends MessagePrompt {
   }
 
   @Override
-  public String getPromptText(ConversationContext conversationContext) {
-    return "All set";
+  public String getPromptText(ConversationContext context) {
+    return "§aYou're done configuring present §6"
+        + ((Present) context.getSessionData(Present.class)).getName() + "§a!";
   }
 }

@@ -18,13 +18,13 @@ public class CommandPrompt extends StringPrompt {
 
   @Override
   public String getPromptText(ConversationContext context) {
-    return "Enter a command to add or \"finish\" to finish";
+    return "§aEnter a command to add or §6finish§a to finish.";
   }
 
   @Override
   public Prompt acceptInput(ConversationContext context, String input) {
-    Present present = (Present) context.getSessionData("present");
-    if (input.equalsIgnoreCase("finish")) {
+    Present present = (Present) context.getSessionData(Present.class);
+    if ("finish".equalsIgnoreCase(input)) {
       return TexturePrompt.INSTANCE;
     } else {
       present.addCommand(input);
