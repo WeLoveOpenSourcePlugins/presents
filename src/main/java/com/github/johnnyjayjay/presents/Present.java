@@ -2,9 +2,11 @@ package com.github.johnnyjayjay.presents;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.server.v1_15_R1.MojangsonParser;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -51,17 +53,16 @@ public final class Present implements ConfigurationSerializable {
 
   public ItemStack createItemStack() {
     ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-    net.minecraft.server.v1_15_R1.ItemStack nmsItem = org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack.asNMSCopy(item);
+    net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
     try {
-      nmsItem.setTag(net.minecraft.server.v1_15_R1.MojangsonParser.parse("{SkullOwner:{Id:\"c8b28030-905d-4d85-a881-372849a8adc8\",Properties:{textures:[{Value:\"" + texture + "\"}]}}}"));
+      nmsItem.setTag(MojangsonParser.parse(
+          "{SkullOwner:{Id:\"c8b28030-905d-4d85-a881-372849a8adc8\", Properties:{textures:[{Value:\"" + texture + "\"}]}}, " +
+              "present: \"" + name + "\"}")
+      );
     } catch (CommandSyntaxException e) {
       e.printStackTrace();
     }
-    item = org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack.asBukkitCopy(nmsItem);
-    SkullMeta meta = (SkullMeta) item.getItemMeta();
-    meta.getPersistentDataContainer().set(KEY, PersistentDataType.STRING, name);
-    item.setItemMeta(meta);
-    return item;
+    return CraftItemStack.asBukkitCopy(nmsItem);
   }
 
   @Override
