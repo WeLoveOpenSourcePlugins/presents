@@ -26,7 +26,8 @@ public class PresentPlugin extends JavaPlugin {
     presentLocations = (PresentLocations) getConfig().get("locations");
     getLogger().info("Config loaded successfully.");
     ConversationFactory conversationFactory = new ConversationFactory(this)
-        .withFirstPrompt(StartPrompt.INSTANCE);
+        .withFirstPrompt(StartPrompt.INSTANCE)
+        .withEscapeSequence("abort");
     Bukkit.getPluginManager().registerEvents(new PresentListener(presentLocations, presentConfig), this);
     getCommand("present")
         .setExecutor(new DelegatingCommand(ImmutableMap.of(

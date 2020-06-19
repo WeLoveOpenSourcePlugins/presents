@@ -24,6 +24,7 @@ public class StartPrompt extends MessagePrompt {
   @Override
   public String getPromptText(ConversationContext context) {
     return "§aWelcome to the configuration of present §6"
-        + ((Present) context.getSessionData(Present.class)).getName() + "§a.";
+        + ((Present) context.getSessionData(Present.class)).getName()
+        + "§a. Type §6abort§a at any time if you want to abort this dialog";
   }
 }
