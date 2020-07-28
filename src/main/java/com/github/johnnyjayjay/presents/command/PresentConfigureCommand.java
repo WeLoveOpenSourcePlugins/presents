@@ -1,7 +1,9 @@
 package com.github.johnnyjayjay.presents.command;
 
 import com.github.johnnyjayjay.presents.Present;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
@@ -21,21 +23,24 @@ public class PresentConfigureCommand extends PresentCommand {
   }
 
   @Override
-  protected void execute(Player executor, Present present) {
-    runConfiguration(executor, present, (r) ->
-        executor.sendMessage("§aPresent §6" + r.getName() + "§a was modified successfully."));
+  protected void execute(CommandSender sender, Present present) {
+    runConfiguration(sender, present, (r) ->
+        sender.sendMessage("§aPresent §6" + r.getName() + "§a was modified successfully."));
   }
 
   @Override
-  protected void unknownPresent(Player executor, String name) {
-    runConfiguration(executor, new Present(name), (result) -> {
+  protected void unknownPresent(CommandSender sender, String name) {
+    runConfiguration(sender, new Present(name), (result) -> {
       presentConfig.set(name, result);
-      executor.sendMessage("§aPresent §6" + name + "§a was created successfully.");
+      sender.sendMessage("§aPresent §6" + name + "§a was created successfully.");
     });
   }
 
-  private void runConfiguration(Player player, Present present, Consumer<Present> callback) {
-    Conversation conversation = conversationFactory.buildConversation(player);
+  private void runConfiguration(CommandSender sender, Present present, Consumer<Present> callback) {
+    if (!(sender instanceof Conversable)) {
+      return;
+    }
+    Conversation conversation = conversationFactory.buildConversation((Conversable) sender);
     conversation.getContext().setSessionData(Present.class, present);
     conversation.begin();
     conversation.addConversationAbandonedListener((event) -> {

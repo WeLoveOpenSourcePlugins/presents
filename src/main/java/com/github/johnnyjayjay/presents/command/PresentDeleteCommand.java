@@ -2,6 +2,7 @@ package com.github.johnnyjayjay.presents.command;
 
 import com.github.johnnyjayjay.presents.Present;
 import com.github.johnnyjayjay.presents.PresentLocations;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
@@ -18,15 +19,15 @@ public class PresentDeleteCommand extends PresentCommand {
   }
 
   @Override
-  protected void execute(Player executor, Present present) {
+  protected void execute(CommandSender sender, Present present) {
     String name = present.getName();
     presentLocations.removePresentsById(name);
     presentConfig.set(name, null);
-    executor.sendMessage("§aThe present §6" + name + "§a was deleted successfully.");
+    sender.sendMessage("§aThe present §6" + name + "§a was deleted successfully.");
   }
 
   @Override
-  protected void unknownPresent(Player executor, String name) {
-    executor.sendMessage("§cThis present does not exist.");
+  protected void unknownPresent(CommandSender sender, String name) {
+    sender.sendMessage("§cThis present does not exist.");
   }
 }

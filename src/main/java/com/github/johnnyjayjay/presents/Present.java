@@ -99,21 +99,25 @@ public final class Present implements ConfigurationSerializable {
 
   @Override
   public Map<String, Object> serialize() {
-    return ImmutableMap.of(
-        "name", name,
-        "commands", commands,
-        "texture", texture,
-        "sound", sound.name(),
-        "particle", particle.name()
-    );
+    ImmutableMap.Builder<String, Object> result = ImmutableMap.builder();
+    result.put("name", name)
+        .put("commands", commands)
+        .put("texture", texture);
+    if (sound != null) {
+      result.put("sound", sound.name());
+    }
+    if (particle != null) {
+      result.put("particle", particle.name());
+    }
+    return result.build();
   }
 
   public static Present deserialize(Map<String, Object> data) {
     Present present = new Present((String) data.get("name"));
     present.commands.addAll((List<String>) data.get("commands"));
     present.texture = (String) data.get("texture");
-    present.sound = Sound.valueOf((String) data.get("sound"));
-    present.particle = Particle.valueOf((String) data.get("particle"));
+    present.sound = data.containsKey("sound") ? Sound.valueOf((String) data.get("sound")) : null;
+    present.particle = data.containsKey("particle") ? Particle.valueOf((String) data.get("particle")) : null;
     return present;
   }
 }

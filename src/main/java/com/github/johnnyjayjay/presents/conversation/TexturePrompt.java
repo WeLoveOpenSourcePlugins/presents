@@ -14,7 +14,7 @@ public class TexturePrompt extends RegexPrompt {
   public static final TexturePrompt INSTANCE = new TexturePrompt();
 
   private TexturePrompt() {
-    super("[\\w-]+=+");
+    super("[\\w-]+(=+)?");
   }
 
   @Override

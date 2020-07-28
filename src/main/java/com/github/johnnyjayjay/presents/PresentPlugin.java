@@ -1,10 +1,7 @@
 package com.github.johnnyjayjay.presents;
 
 import com.github.johnnyjayjay.compatre.NmsClassLoader;
-import com.github.johnnyjayjay.presents.command.DelegatingCommand;
-import com.github.johnnyjayjay.presents.command.PresentConfigureCommand;
-import com.github.johnnyjayjay.presents.command.PresentDeleteCommand;
-import com.github.johnnyjayjay.presents.command.PresentGetCommand;
+import com.github.johnnyjayjay.presents.command.*;
 import com.github.johnnyjayjay.presents.conversation.StartPrompt;
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Bukkit;
@@ -41,7 +38,8 @@ public class PresentPlugin extends JavaPlugin {
         .setExecutor(new DelegatingCommand(ImmutableMap.of(
             "get", new PresentGetCommand(presentConfig),
             "delete", new PresentDeleteCommand(presentConfig, presentLocations),
-            "configure", new PresentConfigureCommand(presentConfig, conversationFactory)
+            "configure", new PresentConfigureCommand(presentConfig, conversationFactory),
+            "list", new PresentListCommand(presentConfig)
         )));
   }
 

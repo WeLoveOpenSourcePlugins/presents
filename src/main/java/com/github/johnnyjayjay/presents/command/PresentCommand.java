@@ -20,26 +20,20 @@ public abstract class PresentCommand implements CommandExecutor {
 
   @Override
   public final boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-    if (!(sender instanceof Player)) {
-      sender.sendMessage("§cThis command is only executable by players.");
-      return true;
-    }
-
     if (args.length != 1) {
       return false;
     }
 
-    Player executor = (Player) sender;
     String name = args[0];
     if (presentConfig.contains(name)) {
-      execute(executor, (Present) presentConfig.get(name));
+      execute(sender, (Present) presentConfig.get(name));
     } else {
-      unknownPresent(executor, name);
+      unknownPresent(sender, name);
     }
     return true;
   }
 
-  protected abstract void execute(Player executor, Present present);
+  protected abstract void execute(CommandSender sender, Present present);
 
-  protected abstract void unknownPresent(Player executor, String name);
+  protected abstract void unknownPresent(CommandSender sender, String name);
 }
