@@ -1,5 +1,10 @@
 package com.github.johnnyjayjay.presents;
 
+import com.github.johnnyjayjay.compatre.NmsClassLoader;
+import com.github.johnnyjayjay.presents.command.DelegatingCommand;
+import com.github.johnnyjayjay.presents.command.PresentConfigureCommand;
+import com.github.johnnyjayjay.presents.command.PresentDeleteCommand;
+import com.github.johnnyjayjay.presents.command.PresentGetCommand;
 import com.github.johnnyjayjay.presents.conversation.StartPrompt;
 import com.google.common.collect.ImmutableMap;
 import org.bukkit.Bukkit;
@@ -11,8 +16,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * @author Johnny_JayJay (https://www.github.com/JohnnyJayJay)
  */
-// TODO 18.06.2020: consider using compatre for version compatibility
 public class PresentPlugin extends JavaPlugin {
+
+  static {
+    NmsClassLoader.loadAllInClasspath();
+  }
 
   private PresentLocations presentLocations;
 
@@ -28,7 +36,7 @@ public class PresentPlugin extends JavaPlugin {
     ConversationFactory conversationFactory = new ConversationFactory(this)
         .withFirstPrompt(StartPrompt.INSTANCE)
         .withEscapeSequence("abort");
-    Bukkit.getPluginManager().registerEvents(new PresentListener(presentLocations, presentConfig), this);
+    Bukkit.getPluginManager().registerEvents(new PresentListener(this, presentLocations, presentConfig), this);
     getCommand("present")
         .setExecutor(new DelegatingCommand(ImmutableMap.of(
             "get", new PresentGetCommand(presentConfig),

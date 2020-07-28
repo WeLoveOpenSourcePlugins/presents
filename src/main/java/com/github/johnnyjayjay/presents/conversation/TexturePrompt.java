@@ -1,9 +1,10 @@
 package com.github.johnnyjayjay.presents.conversation;
 
-import com.github.johnnyjayjay.presents.Present;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.RegexPrompt;
+
+import static com.github.johnnyjayjay.presents.conversation.Util.getPresent;
 
 /**
  * @author Johnny_JayJay (https://www.github.com/JohnnyJayJay)
@@ -18,13 +19,17 @@ public class TexturePrompt extends RegexPrompt {
 
   @Override
   protected Prompt acceptValidatedInput(ConversationContext context, String input) {
-    Present present = (Present) context.getSessionData(Present.class);
-    present.setTexture(input);
-    return EndPrompt.INSTANCE;
+    getPresent(context).setTexture(input);
+    return SoundPrompt.INSTANCE;
   }
 
   @Override
   public String getPromptText(ConversationContext conversationContext) {
     return "§aEnter the Base64-encoded texture value to use for the present. You can find this on head websites.";
+  }
+
+  @Override
+  protected String getFailedValidationText(ConversationContext context, String invalidInput) {
+    return "§6" + invalidInput + "§c is not a valid texture.";
   }
 }

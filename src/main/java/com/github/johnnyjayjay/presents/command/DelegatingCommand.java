@@ -1,4 +1,4 @@
-package com.github.johnnyjayjay.presents;
+package com.github.johnnyjayjay.presents.command;
 
 import java.util.*;
 import org.bukkit.command.*;

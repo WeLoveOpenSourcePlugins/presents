@@ -1,5 +1,7 @@
-package com.github.johnnyjayjay.presents;
+package com.github.johnnyjayjay.presents.command;
 
+import com.github.johnnyjayjay.presents.Present;
+import com.github.johnnyjayjay.presents.PresentLocations;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 

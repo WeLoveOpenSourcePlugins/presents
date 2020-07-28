@@ -1,5 +1,6 @@
-package com.github.johnnyjayjay.presents;
+package com.github.johnnyjayjay.presents.command;
 
+import com.github.johnnyjayjay.presents.Present;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationFactory;
@@ -14,7 +15,7 @@ public class PresentConfigureCommand extends PresentCommand {
 
   private final ConversationFactory conversationFactory;
 
-  protected PresentConfigureCommand(ConfigurationSection presentConfig, ConversationFactory conversationFactory) {
+  public PresentConfigureCommand(ConfigurationSection presentConfig, ConversationFactory conversationFactory) {
     super(presentConfig);
     this.conversationFactory = conversationFactory;
   }

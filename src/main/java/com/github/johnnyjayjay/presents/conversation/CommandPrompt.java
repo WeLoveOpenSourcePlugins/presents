@@ -18,7 +18,8 @@ public class CommandPrompt extends StringPrompt {
 
   @Override
   public String getPromptText(ConversationContext context) {
-    return "§aEnter a command to add or §6finish§a to finish.";
+    return "§aEnter a command to add or §6finish§a to finish. " +
+        "Use §6%player%§a as a placeholder for the name of the player opening the present.";
   }
 
   @Override

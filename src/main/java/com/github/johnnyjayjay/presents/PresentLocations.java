@@ -24,12 +24,12 @@ public class PresentLocations implements ConfigurationSerializable {
     this.locationMap = locationMap;
   }
 
-  public void registerPresent(Block location, String present) {
-    locationMap.put(location.getLocation(), present);
+  public void registerPresent(Location location, String present) {
+    locationMap.put(location, present);
   }
 
-  public void removePresent(Block location) {
-    locationMap.remove(location.getLocation());
+  public void removePresent(Location location) {
+    locationMap.remove(location);
   }
 
   public void removePresentsById(String presentId) {
@@ -46,8 +46,8 @@ public class PresentLocations implements ConfigurationSerializable {
     }
   }
 
-  public Optional<String> getPresentAt(Block location) {
-    return Optional.ofNullable(locationMap.get(location.getLocation()));
+  public Optional<String> getPresentAt(Location location) {
+    return Optional.ofNullable(locationMap.get(location));
   }
 
   @Override

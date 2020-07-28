@@ -1,11 +1,13 @@
 package com.github.johnnyjayjay.presents;
 
+import com.github.johnnyjayjay.compatre.NmsDependent;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
 import net.minecraft.server.v1_15_R1.NBTTagList;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -15,18 +17,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Johnny_JayJay (https://www.github.com/JohnnyJayJay)
  */
+@NmsDependent
 public final class Present implements ConfigurationSerializable {
-
-  public static final NamespacedKey KEY =
-      new NamespacedKey(JavaPlugin.getPlugin(PresentPlugin.class), "present");
 
   private final String name;
   private final List<String> commands;
   private String texture;
+  private Sound sound;
+  private Particle particle;
 
   public Present(String name) {
     this.name = name;
@@ -37,8 +41,10 @@ public final class Present implements ConfigurationSerializable {
     return name;
   }
 
-  public List<String> getCommands() {
-    return commands;
+  public List<String> getCommands(Player player) {
+    return commands.stream()
+        .map((template) -> template.replace("%player%", player.getName()))
+        .collect(Collectors.toList());
   }
 
   public void addCommand(String command) {
@@ -51,6 +57,22 @@ public final class Present implements ConfigurationSerializable {
 
   public void setTexture(String texture) {
     this.texture = texture;
+  }
+
+  public Optional<Sound> getSound() {
+    return Optional.ofNullable(sound);
+  }
+
+  public void setSound(Sound sound) {
+    this.sound = sound;
+  }
+
+  public Optional<Particle> getParticle() {
+    return Optional.ofNullable(particle);
+  }
+
+  public void setParticle(Particle particle) {
+    this.particle = particle;
   }
 
   public ItemStack createItemStack() {
@@ -75,21 +97,23 @@ public final class Present implements ConfigurationSerializable {
     return CraftItemStack.asBukkitCopy(nmsItem);
   }
 
-  public void openFor(Player player) {
-    commands.stream()
-        .map((template) -> template.replace("%player%", player.getName()))
-        .forEach((command) -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
-  }
-
   @Override
   public Map<String, Object> serialize() {
-    return ImmutableMap.of("name", name, "commands", commands, "texture", texture);
+    return ImmutableMap.of(
+        "name", name,
+        "commands", commands,
+        "texture", texture,
+        "sound", sound.name(),
+        "particle", particle.name()
+    );
   }
 
   public static Present deserialize(Map<String, Object> data) {
     Present present = new Present((String) data.get("name"));
     present.commands.addAll((List<String>) data.get("commands"));
     present.texture = (String) data.get("texture");
+    present.sound = Sound.valueOf((String) data.get("sound"));
+    present.particle = Particle.valueOf((String) data.get("particle"));
     return present;
   }
 }

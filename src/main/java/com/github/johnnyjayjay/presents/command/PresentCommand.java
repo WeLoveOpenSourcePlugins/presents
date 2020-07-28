@@ -1,5 +1,6 @@
-package com.github.johnnyjayjay.presents;
+package com.github.johnnyjayjay.presents.command;
 
+import com.github.johnnyjayjay.presents.Present;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
