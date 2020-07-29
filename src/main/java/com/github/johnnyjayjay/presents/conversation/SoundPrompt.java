@@ -27,7 +27,7 @@ public class SoundPrompt extends ValidatingPrompt {
     if (!"skip".equalsIgnoreCase(input)) {
       getPresent(context).setSound(findMatch(Sound.class, input));
     }
-    return ParticlePrompt.INSTANCE;
+    return EffectPrompt.INSTANCE;
   }
 
   @Override

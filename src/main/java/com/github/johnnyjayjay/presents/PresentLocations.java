@@ -40,7 +40,7 @@ public class PresentLocations implements ConfigurationSerializable {
     for (Location location : toRemove) {
       locationMap.remove(location);
       Block block = location.getBlock();
-      if (block.getType() == Material.PLAYER_HEAD) {
+      if (block.getType() == Material.SKULL) {
         block.setType(Material.AIR);
       }
     }

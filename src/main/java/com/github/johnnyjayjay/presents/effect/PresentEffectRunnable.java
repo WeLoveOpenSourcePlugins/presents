@@ -31,7 +31,7 @@ public class PresentEffectRunnable extends BukkitRunnable {
       Present present = (Present) presentConfig.get(presentName);
       World world = location.getWorld();
       present.getSound().ifPresent((sound) -> world.playSound(location, sound, 1, 1));
-      present.getParticle().ifPresent((particle) -> world.spawnParticle(particle, location, 5));
+      present.getEffect().ifPresent((effect) -> world.playEffect(location, effect, 0));
     } else {
       cancel();
     }

@@ -2,13 +2,13 @@ package com.github.johnnyjayjay.presents;
 
 import com.github.johnnyjayjay.compatre.NmsDependent;
 import com.github.johnnyjayjay.presents.effect.PresentEffectRunnable;
-import net.minecraft.server.v1_15_R1.ItemStack;
+import net.minecraft.server.v1_8_R3.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

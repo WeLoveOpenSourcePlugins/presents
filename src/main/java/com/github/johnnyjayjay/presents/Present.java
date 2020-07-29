@@ -2,17 +2,15 @@ package com.github.johnnyjayjay.presents;
 
 import com.github.johnnyjayjay.compatre.NmsDependent;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTTagList;
+import org.bukkit.Effect;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,7 @@ public final class Present implements ConfigurationSerializable {
   private final List<String> commands;
   private String texture;
   private Sound sound;
-  private Particle particle;
+  private Effect effect;
 
   public Present(String name) {
     this.name = name;
@@ -67,18 +65,18 @@ public final class Present implements ConfigurationSerializable {
     this.sound = sound;
   }
 
-  public Optional<Particle> getParticle() {
-    return Optional.ofNullable(particle);
+  public Optional<Effect> getEffect() {
+    return Optional.ofNullable(effect);
   }
 
-  public void setParticle(Particle particle) {
-    this.particle = particle;
+  public void setEffect(Effect effect) {
+    this.effect = effect;
   }
 
   public ItemStack createItemStack() {
-    ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-    net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
-    NBTTagCompound baseCompound = nmsItem.getOrCreateTag();
+    ItemStack item = new ItemStack(Material.SKULL_ITEM);
+    net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+    NBTTagCompound baseCompound = new NBTTagCompound();
     NBTTagCompound skullOwner = new NBTTagCompound();
     skullOwner.setString("Id", "c8b28030-905d-4d85-a881-372849a8adc8");
     NBTTagCompound properties = new NBTTagCompound();
@@ -106,8 +104,8 @@ public final class Present implements ConfigurationSerializable {
     if (sound != null) {
       result.put("sound", sound.name());
     }
-    if (particle != null) {
-      result.put("particle", particle.name());
+    if (effect != null) {
+      result.put("effect", effect.name());
     }
     return result.build();
   }
@@ -117,7 +115,7 @@ public final class Present implements ConfigurationSerializable {
     present.commands.addAll((List<String>) data.get("commands"));
     present.texture = (String) data.get("texture");
     present.sound = data.containsKey("sound") ? Sound.valueOf((String) data.get("sound")) : null;
-    present.particle = data.containsKey("particle") ? Particle.valueOf((String) data.get("particle")) : null;
+    present.effect = data.containsKey("effect") ? Effect.valueOf((String) data.get("effect")) : null;
     return present;
   }
 }
