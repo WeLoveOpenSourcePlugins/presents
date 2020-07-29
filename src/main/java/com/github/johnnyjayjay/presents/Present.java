@@ -2,6 +2,8 @@ package com.github.johnnyjayjay.presents;
 
 import com.github.johnnyjayjay.compatre.NmsDependent;
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.server.v1_8_R3.MojangsonParseException;
+import net.minecraft.server.v1_8_R3.MojangsonParser;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagList;
 import org.bukkit.Effect;
@@ -76,22 +78,15 @@ public final class Present implements ConfigurationSerializable {
   public ItemStack createItemStack() {
     ItemStack item = new ItemStack(Material.SKULL_ITEM);
     net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
-    NBTTagCompound baseCompound = new NBTTagCompound();
-    NBTTagCompound skullOwner = new NBTTagCompound();
-    skullOwner.setString("Id", "c8b28030-905d-4d85-a881-372849a8adc8");
-    NBTTagCompound properties = new NBTTagCompound();
-    NBTTagList textures = new NBTTagList();
-    NBTTagCompound textureCompound = new NBTTagCompound();
-    textureCompound.setString("Value", texture);
-    textures.add(textureCompound);
-    properties.set("textures", textures);
-    skullOwner.set("Properties", properties);
-    baseCompound.set("SkullOwner", skullOwner);
-    baseCompound.setString("present", name);
-    nmsItem.setTag(baseCompound);
-      /* MojangsonParser.parse(
-          "{SkullOwner:{Id:\"c8b28030-905d-4d85-a881-372849a8adc8\", Properties:{textures:[{Value:\"" + textureCompound + "\"}]}}, " +
-              "present: \"" + name + "\"}") */
+    try {
+      NBTTagCompound nbt = MojangsonParser.parse(
+          "{SkullOwner:{Id:\"c8b28030-905d-4d85-a881-372849a8adc8\", Properties:{textures:[{Value:\"" + texture + "\"}]}}, " +
+              "present: \"" + name + "\"}"
+      );
+      nmsItem.setTag(nbt);
+    } catch (MojangsonParseException e) {
+      throw new AssertionError("NBT Tag parsing failed - This should never happen. If you see this error, please report it @ https://github.wlosp.org/presents/issues");
+    }
     return CraftItemStack.asBukkitCopy(nmsItem);
   }
 
