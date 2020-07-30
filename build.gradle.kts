@@ -1,5 +1,6 @@
 plugins {
     java
+    //id("com.github.johnrengelman.shadow") version "6.0.0"
     kotlin("jvm") version "1.3.72"
     id("me.bristermitten.pdm") version "0.0.1"
 }
@@ -17,11 +18,15 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT")
-    pdm("com.github.johnnyjayjay:compatre:master-SNAPSHOT")
+    pdm("com.github.johnnyjayjay:compatre:0.1.0-alpha")
 }
 
 tasks {
     compileJava.get().options.encoding = "UTF-8"
+
+    jar {
+        dependsOn("pdm")
+    }
 }
 
 configure<JavaPluginConvention> {
