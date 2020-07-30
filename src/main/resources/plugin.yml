@@ -6,3 +6,4 @@ commands:
   present:
     description: "Get presents"
     usage: "/present [get|delete|config|list] <name>"
+    permission: "presents.all"
