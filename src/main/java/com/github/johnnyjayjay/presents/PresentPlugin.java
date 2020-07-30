@@ -4,6 +4,7 @@ import com.github.johnnyjayjay.compatre.NmsClassLoader;
 import com.github.johnnyjayjay.presents.command.*;
 import com.github.johnnyjayjay.presents.conversation.StartPrompt;
 import com.google.common.collect.ImmutableMap;
+import me.bristermitten.pdm.PluginDependencyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -15,11 +16,14 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class PresentPlugin extends JavaPlugin {
 
-  static {
+  private PresentLocations presentLocations;
+
+  @Override
+  public void onLoad() {
+    PluginDependencyManager dependencyManager = new PluginDependencyManager(this);
+    dependencyManager.loadAllDependencies().join();
     NmsClassLoader.loadAllInClasspath();
   }
-
-  private PresentLocations presentLocations;
 
   @Override
   public void onEnable() {

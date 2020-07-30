@@ -1,10 +1,11 @@
 plugins {
     java
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    kotlin("jvm") version "1.3.72"
+    id("me.bristermitten.pdm") version "0.0.1"
 }
 
 group = "com.github.johnnyjayjay"
-version = "1.0"
+version = "0.1.0"
 
 repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -16,7 +17,7 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT")
-    implementation("com.github.johnnyjayjay:compatre:master-SNAPSHOT")
+    pdm("com.github.johnnyjayjay:compatre:master-SNAPSHOT")
 }
 
 tasks {
