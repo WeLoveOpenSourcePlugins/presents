@@ -13,11 +13,11 @@ import java.util.function.Consumer;
 /**
  * @author Johnny_JayJay (https://www.github.com/JohnnyJayJay)
  */
-public class PresentConfigureCommand extends PresentCommand {
+public class PresentConfigCommand extends PresentCommand {
 
   private final ConversationFactory conversationFactory;
 
-  public PresentConfigureCommand(ConfigurationSection presentConfig, ConversationFactory conversationFactory) {
+  public PresentConfigCommand(ConfigurationSection presentConfig, ConversationFactory conversationFactory) {
     super(presentConfig);
     this.conversationFactory = conversationFactory;
   }

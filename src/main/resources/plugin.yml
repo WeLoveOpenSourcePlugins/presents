@@ -5,4 +5,4 @@ version: '1.0'
 commands:
   present:
     description: "Get presents"
-    usage: "/present [get|delete|configure|list] <name>"
+    usage: "/present [get|delete|config|list] <name>"

@@ -30,7 +30,7 @@ public class PresentEffectRunnable extends BukkitRunnable {
         && locations.getPresentAt(location).map(presentName::equals).orElse(false)) {
       Present present = (Present) presentConfig.get(presentName);
       World world = location.getWorld();
-      present.getSound().ifPresent((sound) -> world.playSound(location, sound, 1, 1));
+      present.getSound().ifPresent((sound) -> world.playSound(location, sound, 0.7f, 1));
       present.getEffect().ifPresent((effect) -> world.playEffect(location, effect, 0));
     } else {
       cancel();

@@ -35,10 +35,10 @@ public class PresentPlugin extends JavaPlugin {
         .withEscapeSequence("abort");
     Bukkit.getPluginManager().registerEvents(new PresentListener(this, presentLocations, presentConfig), this);
     getCommand("present")
-        .setExecutor(new DelegatingCommand(ImmutableMap.of(
+        .setExecutor(new DelegatingCommand(new PresentHelpCommand(), ImmutableMap.of(
             "get", new PresentGetCommand(presentConfig),
             "delete", new PresentDeleteCommand(presentConfig, presentLocations),
-            "configure", new PresentConfigureCommand(presentConfig, conversationFactory),
+            "config", new PresentConfigCommand(presentConfig, conversationFactory),
             "list", new PresentListCommand(presentConfig)
         )));
   }

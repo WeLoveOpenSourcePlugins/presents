@@ -2,10 +2,9 @@ package com.github.johnnyjayjay.presents;
 
 import com.github.johnnyjayjay.compatre.NmsDependent;
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.server.v1_8_R3.MojangsonParseException;
 import net.minecraft.server.v1_8_R3.MojangsonParser;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
+import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,11 +12,9 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -25,6 +22,18 @@ import java.util.stream.Collectors;
  */
 @NmsDependent
 public final class Present implements ConfigurationSerializable {
+
+  private static final boolean newSystem;
+
+  static {
+    String versionString = Bukkit.getBukkitVersion();
+    int[] version = Arrays.stream(versionString.substring(0, versionString.indexOf('-')).split("\\."))
+        .mapToInt(Integer::parseInt)
+        .toArray();
+    newSystem = version[0] > 1
+        || (version[0] == 1 && version[1] > 16)
+        || (version[0] == 1 && version[1] == 16 && version[2] >= 1);
+  }
 
   private final String name;
   private final List<String> commands;
@@ -76,18 +85,43 @@ public final class Present implements ConfigurationSerializable {
   }
 
   public ItemStack createItemStack() {
-    ItemStack item = new ItemStack(Material.SKULL_ITEM);
+    ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
     net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
     try {
-      NBTTagCompound nbt = MojangsonParser.parse(
-          "{SkullOwner:{Id:\"c8b28030-905d-4d85-a881-372849a8adc8\", Properties:{textures:[{Value:\"" + texture + "\"}]}}, " +
-              "present: \"" + name + "\"}"
+      String nbtString = String.format(
+          "{SkullOwner:{Id:%s,Properties:{textures:[{Value:\"%s\"}]}},present:\"%s\"}",
+          serializeUuid(UUID.randomUUID()), texture, name
       );
+      NBTTagCompound nbt = MojangsonParser.parse(nbtString);
       nmsItem.setTag(nbt);
-    } catch (MojangsonParseException e) {
-      throw new AssertionError("NBT Tag parsing failed - This should never happen. If you see this error, please report it @ https://github.wlosp.org/presents/issues");
+    } catch (Exception e) {
+      throw new AssertionError("NBT Tag parsing failed - This should never happen. If you see this error, please report it @ https://github.wlosp.org/presents/issues", e);
     }
-    return CraftItemStack.asBukkitCopy(nmsItem);
+    item = CraftItemStack.asBukkitCopy(nmsItem);
+    ItemMeta meta = item.getItemMeta();
+    meta.setDisplayName(name);
+    item.setItemMeta(meta);
+    return item;
+  }
+
+  private static String serializeUuid(UUID uuid) {
+    if (newSystem) {
+      StringBuilder result = new StringBuilder();
+      long msb = uuid.getMostSignificantBits();
+      long lsb = uuid.getLeastSignificantBits();
+      return result.append("[I;")
+          .append(msb >> 32)
+          .append(',')
+          .append(msb & Integer.MAX_VALUE)
+          .append(',')
+          .append(lsb >> 32)
+          .append(',')
+          .append(lsb & Integer.MAX_VALUE)
+          .append(']')
+          .toString();
+    } else {
+      return '"' + uuid.toString() + '"';
+    }
   }
 
   @Override

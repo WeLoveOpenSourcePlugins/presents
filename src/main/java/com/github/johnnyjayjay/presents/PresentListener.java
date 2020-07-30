@@ -46,7 +46,6 @@ public class PresentListener implements Listener {
         new PresentEffectRunnable(presentName, presentConfig, presentLocations, location)
             .runTaskTimer(plugin, 0, 20);
       }
-
     }
   }
 
@@ -59,13 +58,16 @@ public class PresentListener implements Listener {
     Block block = event.getClickedBlock();
     presentLocations.getPresentAt(block.getLocation())
         .map((name) -> (Present) presentConfig.get(name))
-        .ifPresent((present) -> openPresent(event.getPlayer(), present, block));
+        .ifPresent((present) -> {
+          event.setCancelled(true);
+          present.getCommands(event.getPlayer()).forEach((command) -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
+          presentLocations.removePresent(block.getLocation());
+          block.setType(Material.AIR);
+        });
   }
 
   private void openPresent(Player player, Present present, Block block) {
-    present.getCommands(player).forEach((command) -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
-    presentLocations.removePresent(block.getLocation());
-    block.setType(Material.AIR);
+
   }
 
   @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
