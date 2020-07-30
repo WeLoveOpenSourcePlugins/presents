@@ -5,7 +5,7 @@ for other players to find and open them.
 
 ## Install
 
-1. Head over to the [releases](../releases) section and download the latest version
+1. Head over to the [releases](../../releases) section and download the latest version
 2. Drag the file into the `plugins` directory of your server
 3. Restart or reload the server
 4. Done!
