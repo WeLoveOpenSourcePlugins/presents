@@ -3,6 +3,8 @@
 A Spigot plugin that lets you create and place small presents in your Minecraft worlds 
 for other players to find and open them.
 
+This is an open source realisation of [Presents [Geschenke!]](https://deinplugin.net/items/40).
+
 ## Install
 
 1. Head over to the [releases](../../releases) section and download the latest version
