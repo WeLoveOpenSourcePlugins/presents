@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.github.johnnyjayjay"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT")
-    pdm("com.github.johnnyjayjay:compatre:0.1.0-alpha")
+    pdm("com.github.johnnyjayjay:compatre:0.2.1-alpha")
 }
 
 tasks {

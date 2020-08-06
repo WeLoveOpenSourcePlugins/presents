@@ -22,11 +22,12 @@ public class PresentPlugin extends JavaPlugin {
   public void onLoad() {
     PluginDependencyManager dependencyManager = new PluginDependencyManager(this);
     dependencyManager.loadAllDependencies().join();
-    NmsClassLoader.loadAllInClasspath();
+    NmsClassLoader.loadNmsDependents(PresentPlugin.class);
   }
 
   @Override
   public void onEnable() {
+    System.out.println(getClass().getClassLoader());
     getLogger().info("Registering present serialisation...");
     ConfigurationSerialization.registerClass(Present.class);
     ConfigurationSerialization.registerClass(PresentLocations.class);
