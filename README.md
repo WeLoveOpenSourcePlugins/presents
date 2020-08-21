@@ -68,7 +68,7 @@ in the official Spigot docs. Note that the names of some sounds or effects may v
 
 To see all available present types, use `/present list`
 
-To get a present item you can place, use `/present get <name>`. After having placed a 
+To get a present item you can place, use `/present get <name>`. To give a present item to other players, use `/present get <name> <player1> <player2> ...`. After having placed a 
 present, it can be opened with a right click. Opening a present means it will run 
 the list of commands for the opener and disappear.
 
