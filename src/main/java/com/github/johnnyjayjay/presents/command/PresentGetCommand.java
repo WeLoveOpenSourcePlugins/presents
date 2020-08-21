@@ -28,8 +28,12 @@ public class PresentGetCommand extends PresentCommand {
           .filter(Objects::nonNull)
           .collect(Collectors.toList());
       targets.forEach((target) -> addPresent(target, present));
-      sender.sendMessage("§aA §6" + present.getName() + "§a present item was given to"
-          + targets.stream().map(Player::getName).collect(Collectors.joining("§a,§6 ", "§6", "§a.")));
+      if (targets.isEmpty()) {
+        sender.sendMessage("§cNone of the players you specified are online.");
+      } else {
+        sender.sendMessage("§aA §6" + present.getName() + "§a present item was given to "
+            + targets.stream().map(Player::getName).collect(Collectors.joining("§a,§6 ", "§6", "§a.")));
+      }
     } else if (sender instanceof Player) {
       addPresent((Player) sender, present);
     } else {

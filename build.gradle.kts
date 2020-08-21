@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT")
-    pdm("com.github.johnnyjayjay:compatre:0.2.2-alpha")
+    pdm("com.github.johnnyjayjay:compatre:v0.2.2-alpha")
 }
 
 tasks {
