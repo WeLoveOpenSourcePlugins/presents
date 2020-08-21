@@ -4,6 +4,7 @@ import com.github.johnnyjayjay.compatre.NmsClassLoader;
 import com.github.johnnyjayjay.presents.command.*;
 import com.github.johnnyjayjay.presents.conversation.StartPrompt;
 import com.google.common.collect.ImmutableMap;
+import me.bristermitten.pdm.PDMBuilder;
 import me.bristermitten.pdm.PluginDependencyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -20,7 +21,7 @@ public class PresentPlugin extends JavaPlugin {
 
   @Override
   public void onLoad() {
-    PluginDependencyManager dependencyManager = new PluginDependencyManager(this);
+    PluginDependencyManager dependencyManager = new PDMBuilder(this).build();
     dependencyManager.loadAllDependencies().join();
     NmsClassLoader.loadNmsDependents(PresentPlugin.class);
   }

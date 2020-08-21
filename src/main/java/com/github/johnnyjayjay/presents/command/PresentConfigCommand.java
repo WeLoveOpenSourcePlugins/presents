@@ -6,7 +6,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationFactory;
-import org.bukkit.entity.Player;
 
 import java.util.function.Consumer;
 
@@ -23,7 +22,7 @@ public class PresentConfigCommand extends PresentCommand {
   }
 
   @Override
-  protected void execute(CommandSender sender, Present present) {
+  protected void execute(CommandSender sender, Present present, String[] args) {
     runConfiguration(sender, present, (r) ->
         sender.sendMessage("§aPresent §6" + r.getName() + "§a was modified successfully."));
   }
